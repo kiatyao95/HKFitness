@@ -1,9 +1,9 @@
 {
   "name": "HK Fitness — Personal Training",
   "short_name": "HK Fitness",
-  "description": "One-to-one personal training for beginners, busy adults and active ageing. Move well, build strength, live better.",
-  "start_url": "/",
-  "scope": "/",
+  "description": "One-to-one personal training for beginners, busy adults and active aging. Move well, build strength, live better.",
+  "start_url": "/HKFitness/",
+  "scope": "/HKFitness/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#0a0a0a",

@@ -10,8 +10,8 @@ GitHub Pages URL; a custom domain is the only open item.
 
 | What | Value | Where |
 | --- | --- | --- |
-| Domain | `https://kiatyao95.github.io/HKFitness/` | `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt`, `sitemap.xml`, `404.html` |
-| WhatsApp | `+60 11-2824 9298` (`601128249298` in links) | `index.html` — contact button, contact list, footer |
+| Domain | `https://kiatyao95.github.io/HKFitness/` | `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt`, `sitemap.xml`, `404.html`, `site.webmanifest` (`start_url`, `scope`) |
+| WhatsApp | `+60 18-286 9298` (`60182869298` in links) | `index.html` — contact button, contact list, footer, floating button |
 | Email | `henrykoh92@gmail.com` | `index.html` — contact button, contact list, footer, JSON-LD `email` |
 | Instagram | `instagram.com/hkfitness_studio` | `index.html` — contact list, footer, JSON-LD `sameAs` |
 | Facebook | `facebook.com/henry.koh.50` | `index.html` — contact list, footer, JSON-LD `sameAs` |
@@ -76,7 +76,8 @@ When a domain is bought:
 1. Add a `CNAME` file at the project root containing the bare domain (for example `hkfitness.my`).
 2. Point a `CNAME` DNS record at `kiatyao95.github.io`.
 3. Replace `https://kiatyao95.github.io/HKFitness/` with `https://hkfitness.my/` in `index.html`,
-   `robots.txt` and `sitemap.xml`, and change `/HKFitness/assets/` to `/assets/` in `404.html`.
+   `robots.txt` and `sitemap.xml`, change `/HKFitness/assets/` to `/assets/` in `404.html`, and
+   change `/HKFitness/` to `/` for `start_url` and `scope` in `site.webmanifest`.
 4. Enable **Enforce HTTPS** in the Pages settings.
 
 `robots.txt` only takes effect on a custom domain — crawlers read it from the host root, not from a
