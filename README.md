@@ -111,7 +111,11 @@ project subpath. Until then, indexing is driven by the sitemap link and search-e
 
 Skip link, landmarks, visible focus rings, keyboard-operable comparison slider (native range input),
 `aria-pressed` on the result thumbnails, and a mobile menu that traps focus and closes on `Esc`.
-All animation is transform/opacity only and is disabled under `prefers-reduced-motion: reduce`.
+
+All animation is transform/opacity only. It runs for every visitor: the site deliberately does not
+respond to `prefers-reduced-motion: reduce`, so the ribbon and the reveals play even on devices that
+ask for less motion. To honour that setting again, reinstate the reduced-motion block in
+`assets/css/style.css` and the `reduceMotion` checks in `assets/js/main.js`.
 
 ## Editing the copy
 

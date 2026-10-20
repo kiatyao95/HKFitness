@@ -7,7 +7,6 @@
 
   var doc = document;
   var root = doc.documentElement;
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---------------------------------------------------------------------- */
   /* Header: solid background after leaving the hero, plus scroll progress.  */
@@ -83,7 +82,7 @@
 
     closeTimer = window.setTimeout(function () {
       if (!menuIsOpen()) mobileMenu.hidden = true;
-    }, reduceMotion.matches ? 0 : 360);
+    }, 360);
 
     if (returnFocus) navToggle.focus({ preventScroll: true });
   }
@@ -143,7 +142,7 @@
     });
   }
 
-  if (!('IntersectionObserver' in window) || reduceMotion.matches) {
+  if (!('IntersectionObserver' in window)) {
     revealAll();
   } else {
     var revealObserver = new IntersectionObserver(

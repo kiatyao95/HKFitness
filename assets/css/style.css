@@ -1921,34 +1921,11 @@ html.is-locked { overflow: hidden; }
   }
 }
 
-/* 22. Reduced motion & print ---------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .js [data-reveal],
-  .js .hero__line,
-  .js .hero__brush,
-  .js .eyebrow__rule,
-  .js .hero__media,
-  .js .wa-float {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
-  .marquee__track { animation: none; }
-  .marquee { transform: none; }
-}
-
+/* 22. Print ---------------------------------------------------------------- */
+/* This site deliberately ignores `prefers-reduced-motion`. The motion is the
+   brand — the ribbon, the hero rise and the scroll reveals are meant to play
+   for every visitor. If that decision is reversed, reinstate the
+   reduced-motion block here and the `reduceMotion` checks in main.js. */
 @media print {
   .site-header,
   .mobile-menu,
