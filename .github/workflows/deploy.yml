@@ -36,7 +36,8 @@ jobs:
             --exclude '_site' \
             --exclude '.git' --exclude '.github' --exclude '_tmp' \
             --exclude 'tools' --exclude 'My Picture' \
-            --exclude '*.txt' --exclude '*.pdf' --exclude 'README.md'
+            --include 'robots.txt' --exclude '*.txt' \
+            --exclude '*.pdf' --exclude 'README.md'
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
