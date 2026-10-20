@@ -1,0 +1,119 @@
+# HK FITNESS — one-page coaching site
+
+A static, dependency-free site for a personal coach. Black, white and gold; heavy athletic type;
+deliberate motion. No build step, no framework — the files you see are the files that ship.
+
+## Before going live
+
+The contact details, social handles and address are the real ones. The site is addressed to its
+GitHub Pages URL; a custom domain is the only open item.
+
+| What | Value | Where |
+| --- | --- | --- |
+| Domain | `https://kiatyao95.github.io/HKFitness/` | `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt`, `sitemap.xml`, `404.html` |
+| WhatsApp | `+60 11-2824 9298` (`601128249298` in links) | `index.html` — contact button, contact list, footer |
+| Email | `henrykoh92@gmail.com` | `index.html` — contact button, contact list, footer, JSON-LD `email` |
+| Instagram | `instagram.com/hkfitness_studio` | `index.html` — contact list, footer, JSON-LD `sameAs` |
+| Facebook | `facebook.com/henry.koh.50` | `index.html` — contact list, footer, JSON-LD `sameAs` |
+| Coach name | not shown anywhere | the copy says "the coach" — add a name if you want it public |
+| Location | `87-1, Jalan 1/17, Taman Fadason, 52000 Kepong, Kuala Lumpur` | `index.html` — contact list, footer, FAQ ("Where is the studio?") and JSON-LD `address` / `areaServed` |
+
+Client photographs in `assets/img/results/` are published with the assumption of written client
+consent. Confirm that before deploying, and keep the "Individual results vary" line in the footer.
+
+## Logo and icons
+
+The header mark, favicon and app icons are all generated from the bear mascot in
+`HK_FITNESS_Signboard.pdf` — see `MARK_CROP` in `tools/build-images.py`. Re-run the pipeline after
+changing the crop; nothing in the HTML points at a hand-made logo file.
+
+## Studio photographs
+
+`assets/img/studio/gym-01.jpg` … `gym-07.jpg` are generated placeholders, sized 1600×1200. When the
+real gym-room photos are ready, overwrite those seven files with the same names and a 4:3 landscape
+aspect ratio — nothing else needs to change. 2000px wide is plenty; the gallery crops with
+`object-fit: cover`.
+
+To remove the "PHOTOGRAPH PENDING" labels, just replace the files: the labels are part of the images,
+not the page.
+
+## Local preview
+
+```powershell
+python -m http.server 4173
+```
+
+Then open <http://localhost:4173>. A plain file open also works, but a server matches production
+behaviour for the manifest, 404 page and root-relative paths.
+
+## Deploy to GitHub Pages
+
+The site publishes at <https://kiatyao95.github.io/HKFitness/> from the `main` branch of
+<https://github.com/kiatyao95/HKFitness>.
+
+1. In the repository: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. Every push to `main` runs `.github/workflows/deploy.yml` and publishes the site.
+
+The workflow assembles a `_site/` artifact first, so `tools/`, the source `.txt` files, the signboard
+PDF and this README are not published.
+
+```powershell
+git add .
+git commit -m "Update site"
+git push
+```
+
+`My Picture/` (raw client and coach photography) and `_tmp/` are git-ignored and stay local.
+
+Because the site is served from a subpath, the canonical link, Open Graph URLs, JSON-LD `@id`s, the
+sitemap and the 404 page's asset paths all carry the `/HKFitness/` prefix. Keep them in step with the
+repository name.
+
+### Custom domain
+
+When a domain is bought:
+
+1. Add a `CNAME` file at the project root containing the bare domain (for example `hkfitness.my`).
+2. Point a `CNAME` DNS record at `kiatyao95.github.io`.
+3. Replace `https://kiatyao95.github.io/HKFitness/` with `https://hkfitness.my/` in `index.html`,
+   `robots.txt` and `sitemap.xml`, and change `/HKFitness/assets/` to `/assets/` in `404.html`.
+4. Enable **Enforce HTTPS** in the Pages settings.
+
+`robots.txt` only takes effect on a custom domain — crawlers read it from the host root, not from a
+project subpath. Until then, indexing is driven by the sitemap link and search-engine submissions.
+
+## What is included
+
+- `index.html` — the whole page: hero, name story, training, method, studio gallery, results
+  comparison, coach, FAQ, contact.
+- `assets/css/style.css` — design tokens, layout, motion. Brand gold is `#f8c008`, sampled from the
+  signboard artwork.
+- `assets/js/main.js` — header state, mobile menu, scroll reveals, before/after slider, result
+  switcher. Degrades gracefully: without JS the content is visible and the FAQ still opens.
+- `404.html`, `robots.txt`, `sitemap.xml`, `site.webmanifest`, icons.
+- `tools/build-images.py` — rebuilds every derivative image from the source material (`My Picture/`,
+  `HK_FITNESS_Signboard.pdf`). Requires `pillow` and `pymupdf`; run `python tools/build-images.py`
+  from the project root.
+
+## SEO
+
+- One `<h1>`, one canonical URL, Open Graph and Twitter cards, a 1200×630 social image.
+- Structured data as a single `@graph`: `HealthClub` + `LocalBusiness`, `WebSite`, and `FAQPage`.
+  The FAQ answers in the JSON-LD are the same text shown on the page — if you edit a FAQ answer,
+  edit both, or Google may ignore the rich result.
+- `robots.txt` allows the site and blocks the source folders; `sitemap.xml` lists the single page
+  with image entries. Update `lastmod` when the content changes.
+- Fonts are loaded from Google Fonts with `display=swap`; the rest of the site has no third-party
+  requests, no trackers and no cookies.
+
+## Accessibility and motion
+
+Skip link, landmarks, visible focus rings, keyboard-operable comparison slider (native range input),
+`aria-pressed` on the result thumbnails, and a mobile menu that traps focus and closes on `Esc`.
+All animation is transform/opacity only and is disabled under `prefers-reduced-motion: reduce`.
+
+## Editing the copy
+
+Text lives directly in `index.html`; there is no CMS or templating. Section copy is grouped under
+comments such as `<!-- 07 · FAQ -->` so it is easy to find. Keep the tone plain and specific — the
+brief in `Color Theme Specs.txt` is explicit about avoiding generic marketing language.

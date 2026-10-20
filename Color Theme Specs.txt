@@ -1,0 +1,74 @@
+HK Fitness Website Theme
+Theme concept: Bold, Powerful, High-Energy Fitness — Black, White and Gold.
+
+The HK Fitness website should reflect the same aggressive, athletic and premium identity as the signboard. The design should communicate strength, discipline, confidence and transformation, with a muscular bear mascot representing power and determination.
+
+
+
+
+1. Colour palette
+- Black: Main background for a bold, premium gym atmosphere.
+- Gold / Yellow: Highlights, buttons, borders and energetic brush strokes.
+- White: Headlines, body text and strong contrast.
+- Grey: Secondary text, cards and supporting elements.
+
+
+
+
+
+2. Typography and visual style
+
+Use bold, uppercase, italic sans-serif fonts inspired by sports brands. Combine large headlines, sharp angles, distressed brush strokes and diagonal yellow accents to create movement and intensity.
+
+
+
+
+
+3. Brand identity
+
+Keep the HK Fitness logo and muscular bear mascot prominent. Use authentic gym photography, strength-training imagery and subtle metallic effects. The overall impression should be strong, energetic and memorable.
+
+Build the HK Fitness website as a distinctive, production-quality fitness brand experience. Use the existing HK Fitness signboard as the primary brand reference.
+
+### Art direction
+- Black, white and gold/yellow only as the core brand palette.
+- Bold, condensed, athletic typography with oversized headlines.
+- Strong asymmetrical compositions, diagonal graphic elements and purposeful negative space.
+- Use the muscular bear mascot and authentic gym photography as brand assets.
+- Make the website look art-directed for HK Fitness, not like a generic SaaS landing page.
+
+### Motion direction
+Create a deliberate animation system rather than adding random effects.
+
+1. Hero: reveal the headline in staggered lines, introduce the background image with subtle movement, and animate a gold brush-stroke accent.
+2. Navigation: restrained hover transitions and a clean mobile-menu animation.
+3. Scrolling: reveal selected sections with subtle directional movement and staggered timing.
+4. Training and facilities: use image reveals, carefully timed transitions and restrained parallax where appropriate.
+5. Buttons: create tactile hover and press states that feel responsive.
+6. Page transitions: implement only if they improve navigation and do not slow the experience.
+
+### Anti-AI-slop rules
+- Do not default to the typical centered hero, three identical feature cards and repetitive rounded containers.
+- Do not use purple gradients, excessive glassmorphism, random floating blobs or generic stock-dashboard layouts.
+- Do not animate every element or apply the same fade-in effect to every section.
+- Avoid unnecessary 3D, custom cursors, particle effects and animation for decoration alone.
+- Every animation must support brand identity, hierarchy, storytelling or usability.
+- Use distinctive typography, precise spacing, consistent design tokens and a coherent visual system.
+
+### Engineering requirements
+- Inspect the existing codebase and framework before making changes.
+- Use GSAP with ScrollTrigger for complex scroll storytelling when justified, and Motion for React interactions when appropriate. Prefer CSS for simple effects.
+- Animate primarily transform and opacity; avoid expensive layout-triggering animations.
+- Respect prefers-reduced-motion, keyboard accessibility, mobile responsiveness and touch interactions.
+- Avoid unnecessary dependencies and ensure animations clean up correctly.
+- Optimize image sizes, loading behavior and animation performance.
+
+### Required workflow
+1. Establish the visual direction and page composition before coding.
+2. Implement the complete responsive page.
+3. Run the project and inspect the actual rendered result at desktop and mobile sizes.
+4. Identify generic, repetitive or visually weak sections.
+5. Refine typography, spacing, image composition, animation timing and transitions.
+6. Run a final accessibility, responsiveness and performance audit.
+
+Do not stop at code that compiles. The final result must look intentionally designed, feel cohesive with the HK Fitness signboard and remain fast and usable.

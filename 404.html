@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | HK Fitness</title>
+<meta name="description" content="That page does not exist. Head back to HK Fitness for personal training and strength coaching.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="icon" href="/HKFitness/assets/img/icons/favicon.ico" sizes="any">
+<link rel="stylesheet" href="/HKFitness/assets/css/style.css">
+<style>
+  .notfound {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    gap: 1.5rem;
+    padding-block: 6rem;
+  }
+  .notfound__code {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 22vw, 14rem);
+    font-weight: 900;
+    font-style: italic;
+    font-stretch: 112%;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: var(--gold);
+  }
+  .notfound__title { font-size: var(--step-2); font-style: italic; }
+  .notfound p { color: var(--grey); max-width: 46ch; }
+  /* `.notfound p` also matches the numeral, so the gold needs the extra weight. */
+  .notfound p.notfound__code { color: var(--gold); max-width: none; }
+  .notfound__actions { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; }
+</style>
+</head>
+<body>
+<main class="shell notfound">
+  <p class="mono">Error 404</p>
+  <p class="notfound__code" aria-hidden="true">404</p>
+  <h1 class="notfound__title">This rep didn't land.</h1>
+  <p>The page you were looking for has moved or never existed. Everything worth training for is one page away.</p>
+  <div class="notfound__actions">
+    <a class="btn btn--gold" href="/HKFitness/">Back to HK Fitness</a>
+    <a class="link-arrow" href="/HKFitness/#contact">Book a consultation</a>
+  </div>
+</main>
+</body>
+</html>

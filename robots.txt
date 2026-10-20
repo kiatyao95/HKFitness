@@ -1,0 +1,12 @@
+# HK Fitness — robots.txt
+# Traffic is welcome. The sitemap is the source of truth for indexing.
+
+User-agent: *
+Allow: /
+
+# Source material kept in the repository for asset rebuilds is not content.
+Disallow: /My%20Picture/
+Disallow: /tools/
+Disallow: /_tmp/
+
+Sitemap: https://kiatyao95.github.io/HKFitness/sitemap.xml

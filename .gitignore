@@ -1,0 +1,6 @@
+# Local working material — never published.
+_tmp/
+
+# Raw client and coach photography. The site uses optimised copies that are
+# generated into assets/img by tools/build-images.py.
+My Picture/
