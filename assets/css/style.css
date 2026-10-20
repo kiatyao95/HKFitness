@@ -806,7 +806,13 @@ html.is-locked { overflow: hidden; }
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-.marquee.is-paused .marquee__track { animation-play-state: paused; }
+/* The loop travels 50% of the track, so its speed depends on how wide the
+   track happens to be: ~37px per second on desktop, only ~22px per second on
+   a phone, which reads as frozen. Shortening the cycle where the band is
+   narrow keeps the ribbon visibly moving. */
+@media (max-width: 900px) {
+  .marquee__track { animation-duration: 17s; }
+}
 
 /* 10. Sections ------------------------------------------------------------- */
 .section {

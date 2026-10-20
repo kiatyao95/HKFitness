@@ -169,19 +169,6 @@
   }
 
   /* ---------------------------------------------------------------------- */
-  /* Marquee: pause while off screen                                        */
-  /* ---------------------------------------------------------------------- */
-  var marquee = doc.querySelector('[data-marquee]');
-  if (marquee && 'IntersectionObserver' in window && !reduceMotion.matches) {
-    var marqueeBand = marquee.parentElement;
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        marqueeBand.classList.toggle('is-paused', !entry.isIntersecting);
-      });
-    }).observe(marqueeBand);
-  }
-
-  /* ---------------------------------------------------------------------- */
   /* Before / after comparison                                              */
   /* ---------------------------------------------------------------------- */
   var compare = doc.querySelector('[data-compare]');
