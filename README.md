@@ -5,12 +5,12 @@ deliberate motion. No build step, no framework — the files you see are the fil
 
 ## Before going live
 
-The contact details, social handles and address are the real ones. The site is addressed to its
-GitHub Pages URL; a custom domain is the only open item.
+The contact details, social handles and address are the real ones. The site is served from
+`https://hk-fitness.com/`, with `www` redirecting to the bare domain.
 
 | What | Value | Where |
 | --- | --- | --- |
-| Domain | `https://kiatyao95.github.io/HKFitness/` | `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt`, `sitemap.xml`, `404.html`, `site.webmanifest` (`start_url`, `scope`) |
+| Domain | `https://hk-fitness.com/` | `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt`, `sitemap.xml`, `404.html`, `site.webmanifest` (`start_url`, `scope`) |
 | WhatsApp | `+60 18-286 9298` (`60182869298` in links) | `index.html` — contact button, contact list, footer, floating button |
 | Email | `henrykoh92@gmail.com` | `index.html` — contact button, contact list, footer, JSON-LD `email` |
 | Instagram | `instagram.com/hkfitness_studio` | `index.html` — contact list, footer, JSON-LD `sameAs` |
@@ -53,7 +53,7 @@ behaviour for the manifest, 404 page and root-relative paths.
 
 ## Deploy to GitHub Pages
 
-The site publishes at <https://kiatyao95.github.io/HKFitness/> from the `main` branch of
+The site publishes at <https://hk-fitness.com/> from the `main` branch of
 <https://github.com/kiatyao95/HKFitness>.
 
 1. In the repository: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
@@ -70,23 +70,29 @@ git push
 
 `My Picture/` (raw client and coach photography) and `_tmp/` are git-ignored and stay local.
 
-Because the site is served from a subpath, the canonical link, Open Graph URLs, JSON-LD `@id`s, the
-sitemap and the 404 page's asset paths all carry the `/HKFitness/` prefix. Keep them in step with the
-repository name.
+The canonical link, Open Graph URLs, JSON-LD `@id`s, the sitemap and the manifest all carry the
+custom domain, and `404.html` uses root-relative paths (`/assets/…`) because the domain root is the
+site root. Keep them in step if the domain ever changes.
 
 ### Custom domain
 
-When a domain is bought:
+`hk-fitness.com` is registered at GoDaddy, which also hosts the DNS. Two record sets make GitHub
+Pages answer for it:
 
-1. Add a `CNAME` file at the project root containing the bare domain (for example `hkfitness.my`).
-2. Point a `CNAME` DNS record at `kiatyao95.github.io`.
-3. Replace `https://kiatyao95.github.io/HKFitness/` with `https://hkfitness.my/` in `index.html`,
-   `robots.txt` and `sitemap.xml`, change `/HKFitness/assets/` to `/assets/` in `404.html`, and
-   change `/HKFitness/` to `/` for `start_url` and `scope` in `site.webmanifest`.
-4. Enable **Enforce HTTPS** in the Pages settings.
+| Type | Name | Value |
+| --- | --- | --- |
+| A | `@` | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+| CNAME | `www` | `kiatyao95.github.io` |
 
-`robots.txt` only takes effect on a custom domain — crawlers read it from the host root, not from a
-project subpath. Until then, indexing is driven by the sitemap link and search-engine submissions.
+The A records are GitHub's published addresses and the `www` CNAME points at the account host, not
+at a repository. Any `Parked` A record or domain forwarding at GoDaddy overrides them — remove both.
+
+The domain is entered in **Settings → Pages → Custom domain**, not in a `CNAME` file: this site
+publishes with a GitHub Actions workflow, and a `CNAME` file only applies to branch-based
+publishing. **Enforce HTTPS** issues the certificate, after which GitHub redirects both
+`www.hk-fitness.com` and the old `kiatyao95.github.io/HKFitness/` URL to the canonical domain.
+
+`robots.txt` is read from the domain root now, so its `Sitemap:` line takes effect.
 
 ## What is included
 

@@ -9,4 +9,4 @@ Disallow: /My%20Picture/
 Disallow: /tools/
 Disallow: /_tmp/
 
-Sitemap: https://kiatyao95.github.io/HKFitness/sitemap.xml
+Sitemap: https://hk-fitness.com/sitemap.xml

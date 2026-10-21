@@ -2,20 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://kiatyao95.github.io/HKFitness/</loc>
+    <loc>https://hk-fitness.com/</loc>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://kiatyao95.github.io/HKFitness/assets/img/og-image.jpg</image:loc>
+      <image:loc>https://hk-fitness.com/assets/img/og-image.jpg</image:loc>
       <image:title>HK Fitness — personal training and strength coaching</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://kiatyao95.github.io/HKFitness/assets/img/coach-portrait.jpg</image:loc>
+      <image:loc>https://hk-fitness.com/assets/img/coach-portrait.jpg</image:loc>
       <image:title>HK Fitness coach</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://kiatyao95.github.io/HKFitness/assets/img/studio/gym-01.jpg</image:loc>
+      <image:loc>https://hk-fitness.com/assets/img/studio/gym-01.jpg</image:loc>
       <image:title>HK Fitness studio — benches, treadmills and dumbbells</image:title>
     </image:image>
   </url>
