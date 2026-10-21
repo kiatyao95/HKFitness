@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://kiatyao95.github.io/HKFitness/</loc>
-    <lastmod>2026-10-20</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -16,7 +16,7 @@
     </image:image>
     <image:image>
       <image:loc>https://kiatyao95.github.io/HKFitness/assets/img/studio/gym-01.jpg</image:loc>
-      <image:title>HK Fitness training floor</image:title>
+      <image:title>HK Fitness studio — benches, treadmills and dumbbells</image:title>
     </image:image>
   </url>
 </urlset>

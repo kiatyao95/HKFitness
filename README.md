@@ -29,13 +29,19 @@ changing the crop; nothing in the HTML points at a hand-made logo file.
 
 ## Studio photographs
 
-`assets/img/studio/gym-01.jpg` … `gym-07.jpg` are generated placeholders, sized 1600×1200. When the
-real gym-room photos are ready, overwrite those seven files with the same names and a 4:3 landscape
-aspect ratio — nothing else needs to change. 2000px wide is plenty; the gallery crops with
-`object-fit: cover`.
+`assets/img/studio/gym-01.jpg` … `gym-06.jpg` are cut from the room photos in `My Picture/Gym Room/`
+by `build_studio()` in `tools/build-images.py`. The gallery has two slot shapes, so every frame is
+cropped to match before `object-fit: cover` sees it: 5:4 for a regular tile, 2.57:1 for the two wide
+slots. The sources are portrait phone photos, so each one is reduced to a horizontal band through the
+equipment.
 
-To remove the "PHOTOGRAPH PENDING" labels, just replace the files: the labels are part of the images,
-not the page.
+To swap a photo, drop it into `My Picture/Gym Room/`, edit its line in `STUDIO_CROPS` (the crop box is
+left, right, top in source pixels) and update the matching `<figure>` in the studio gallery — the
+alternate text has to describe what is actually in the frame. Then run `python tools/build-images.py`.
+
+The six figures fill the 6-column grid exactly: wide tile plus one tile on the first row, three tiles
+on the second, wide tile plus the visits note on the third. Keep that rhythm if you add or remove a
+photo, or the last row will leave a hole.
 
 ## Local preview
 

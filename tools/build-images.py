@@ -2,8 +2,8 @@
 HK FITNESS — asset pipeline.
 
 Builds every derivative image the site needs from the raw material in
-`My Picture/` and `HK_FITNESS_Signboard.pdf`, plus branded placeholders for
-the studio gallery slots that are waiting on photography.
+`My Picture/` and `HK_FITNESS_Signboard.pdf`: brand artwork, the coach
+portrait, client comparisons, the studio gallery and the social card.
 
 Run from the project root:
     python tools/build-images.py
@@ -13,7 +13,6 @@ Requires: pillow, pymupdf
 
 from __future__ import annotations
 
-import random
 from pathlib import Path
 
 import pymupdf
@@ -26,7 +25,6 @@ TMP = ROOT / "_tmp"
 
 GOLD = (248, 192, 8)
 GOLD_WARM = (240, 160, 32)
-INK = (10, 10, 10)
 
 FONT_DISPLAY = Path("C:/Windows/Fonts/ariblk.ttf")
 FONT_CONDENSED = Path("C:/Windows/Fonts/impact.ttf")
@@ -180,102 +178,39 @@ def build_results() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Studio gallery placeholders
+# Studio gallery
 # --------------------------------------------------------------------------- #
 
-
-def grain(size: tuple[int, int], strength: int = 12) -> Image.Image:
-    layer = Image.new("L", size, 0)
-    pixels = layer.load()
-    rng = random.Random(7)
-    for y in range(0, size[1], 2):
-        for x in range(0, size[0], 2):
-            value = rng.randint(0, strength)
-            pixels[x, y] = value
-    return layer
-
-
-def studio_placeholder(index: int, size: tuple[int, int], label: str) -> Image.Image:
-    width, height = size
-    canvas = Image.new("RGB", size, INK)
-
-    # Soft diagonal light falloff so the panel reads as a photograph slot.
-    glow = Image.new("L", size, 0)
-    draw = ImageDraw.Draw(glow)
-    for step in range(60):
-        alpha = int(26 * (1 - step / 60))
-        draw.ellipse(
-            (
-                -width * 0.35 + step * 12,
-                -height * 0.45 + step * 10,
-                width * 0.95 + step * 12,
-                height * 0.95 + step * 10,
-            ),
-            fill=alpha,
-        )
-    glow = glow.filter(ImageFilter.GaussianBlur(180))
-    canvas = Image.composite(Image.new("RGB", size, (46, 42, 34)), canvas, glow)
-
-    noise = grain(size, 16)
-    canvas = ImageChops.add(canvas, Image.merge("RGB", (noise, noise, noise)), scale=1.0, offset=-8)
-
-    draw = ImageDraw.Draw(canvas, "RGBA")
-
-    # Faint engineering grid.
-    step = 80
-    for x in range(0, width, step):
-        draw.line([(x, 0), (x, height)], fill=(255, 255, 255, 6), width=1)
-    for y in range(0, height, step):
-        draw.line([(0, y), (width, y)], fill=(255, 255, 255, 6), width=1)
-
-    # Inset hairline frame with corner ticks.
-    inset = 46
-    draw.rectangle([inset, inset, width - inset, height - inset], outline=(255, 255, 255, 26), width=2)
-    tick = 46
-    for cx, cy, dx, dy in (
-        (inset, inset, 1, 1),
-        (width - inset, inset, -1, 1),
-        (inset, height - inset, 1, -1),
-        (width - inset, height - inset, -1, -1),
-    ):
-        draw.line([(cx, cy), (cx + dx * tick, cy)], fill=GOLD, width=4)
-        draw.line([(cx, cy), (cx, cy + dy * tick)], fill=GOLD, width=4)
-
-    # Everything sits in the middle third so the placeholder still reads after
-    # `object-fit: cover` trims it to a wide or square gallery slot.
-    cx, cy = width // 2, height // 2
-
-    mono = ImageFont.truetype(str(FONT_MONO), 44)
-    numerals = ImageFont.truetype(str(FONT_DISPLAY), 330)
-    condensed = ImageFont.truetype(str(FONT_CONDENSED), 76)
-
-    draw.line([(cx - 78, cy - 268), (cx + 78, cy - 268)], fill=GOLD, width=7)
-    draw.text((cx, cy + 146), label.upper(), font=condensed, fill=(255, 255, 255, 210), anchor="ma")
-    draw.text((cx, cy + 250), "PHOTOGRAPH PENDING", font=mono, fill=(255, 255, 255, 100), anchor="ma")
-
-    # The numeral is a watermark, so it goes through a real alpha composite —
-    # ImageDraw on an RGB canvas ignores the alpha channel of the fill.
-    overlay = Image.new("RGBA", size, (0, 0, 0, 0))
-    ImageDraw.Draw(overlay).text((cx, cy - 28), f"{index:02d}", font=numerals, fill=(248, 192, 8, 42), anchor="mm")
-    canvas = Image.alpha_composite(canvas.convert("RGBA"), overlay).convert("RGB")
-
-    return canvas
+# Photograph, the box the frame is cut from (left, right, top in source
+# pixels), and the shape of the gallery slot it fills. Tiles are 5:4 and the
+# two wide slots are 2.57:1 — see `.gallery__item` in `assets/css/style.css`.
+STUDIO_CROPS = [
+    ("WhatsApp Image 2026-10-21 at 11.07.46 (1).jpeg", (30, 608, 560), (18, 7)),
+    ("WhatsApp Image 2026-10-21 at 11.07.42 (1).jpeg", (0, 608, 150), (5, 4)),
+    ("WhatsApp Image 2026-10-21 at 11.07.42.jpeg", (0, 608, 270), (5, 4)),
+    ("WhatsApp Image 2026-10-21 at 11.07.44.jpeg", (0, 608, 420), (5, 4)),
+    ("WhatsApp Image 2026-10-21 at 11.07.47.jpeg", (200, 608, 480), (5, 4)),
+    ("WhatsApp Image 2026-10-21 at 11.07.46.jpeg", (0, 608, 590), (18, 7)),
+]
 
 
 def build_studio() -> None:
     print("studio")
-    labels = [
-        "Training floor",
-        "Rack & free weights",
-        "Cable station",
-        "Assessment corner",
-        "Mobility space",
-        "Recovery & stretch",
-        "The studio",
-    ]
-    for index, label in enumerate(labels, start=1):
-        image = studio_placeholder(index, (1600, 1200), label)
-        save_jpeg(image, f"studio/gym-{index:02d}.jpg", quality=86)
+    for index, (photo, (left, right, top), ratio) in enumerate(STUDIO_CROPS, start=1):
+        source = Image.open(RAW / "Gym Room" / photo).convert("RGB")
+
+        # The sources are portrait phone exports, so each slot keeps a
+        # horizontal band through the equipment rather than the whole frame.
+        width = right - left
+        height = round(width * ratio[1] / ratio[0])
+        top = max(0, min(top, source.height - height))
+        frame = source.crop((left, top, left + width, top + height))
+
+        # The band is upscaled once here and sharpened, rather than left for
+        # every browser to resample a 608px-wide original.
+        frame = frame.resize((frame.width * 2, frame.height * 2), Image.LANCZOS)
+        frame = frame.filter(ImageFilter.UnsharpMask(radius=1.1, percent=55, threshold=3))
+        save_jpeg(frame, f"studio/gym-{index:02d}.jpg", quality=80)
 
 
 # --------------------------------------------------------------------------- #
