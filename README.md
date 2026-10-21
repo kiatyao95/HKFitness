@@ -11,7 +11,7 @@ The contact details, social handles and address are the real ones. The site is s
 | What | Value | Where |
 | --- | --- | --- |
 | Domain | `https://hk-fitness.com/` | `index.html` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD), `robots.txt`, `sitemap.xml`, `404.html`, `site.webmanifest` (`start_url`, `scope`) |
-| WhatsApp | `+60 18-286 9298` (`60182869298` in links) | `index.html` — contact button, contact list, footer, floating button |
+| WhatsApp | `+60 18-206 9298` (`60182069298` in links) | `index.html` — contact button, contact list, footer, floating button |
 | Email | `henrykoh92@gmail.com` | `index.html` — contact button, contact list, footer, JSON-LD `email` |
 | Instagram | `instagram.com/hkfitness_studio` | `index.html` — contact list, footer, JSON-LD `sameAs` |
 | Facebook | `facebook.com/henry.koh.50` | `index.html` — contact list, footer, JSON-LD `sameAs` |
