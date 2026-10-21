@@ -228,6 +228,155 @@
   }
 
   /* ---------------------------------------------------------------------- */
+  /* Studio carousel                                                        */
+  /* ---------------------------------------------------------------------- */
+  var slider = doc.querySelector('[data-slider]');
+
+  if (slider) {
+    var sliderTrack = slider.querySelector('[data-slider-track]');
+    var slides = sliderTrack
+      ? Array.prototype.slice.call(sliderTrack.querySelectorAll('[data-slide]'))
+      : [];
+    var sliderPrev = slider.querySelector('[data-slider-prev]');
+    var sliderNext = slider.querySelector('[data-slider-next]');
+    var sliderIndex = slider.querySelector('[data-slider-index]');
+    var sliderTotal = slider.querySelector('[data-slider-total]');
+    var sliderCaption = slider.querySelector('[data-slider-caption]');
+    var sliderFrame = false;
+    var sliderCurrent = 0;
+    var sliderAuto = false;
+    var sliderAutoTimer = 0;
+
+    function pad(value) {
+      return (value < 10 ? '0' : '') + value;
+    }
+
+    // `offsetLeft` is measured against the nearest positioned ancestor, which
+    // the track is not, so positions are taken from the two client rects.
+    function slideOffset(index) {
+      var slide = slides[index];
+      if (!slide) return 0;
+      return (
+        slide.getBoundingClientRect().left -
+        sliderTrack.getBoundingClientRect().left +
+        sliderTrack.scrollLeft
+      );
+    }
+
+    function maxScroll() {
+      return Math.max(0, sliderTrack.scrollWidth - sliderTrack.clientWidth);
+    }
+
+    function paintSlider() {
+      var active = slides[sliderCurrent];
+
+      if (sliderIndex) sliderIndex.textContent = pad(sliderCurrent + 1);
+      if (sliderPrev) sliderPrev.disabled = sliderCurrent === 0;
+      if (sliderNext) sliderNext.disabled = sliderCurrent === slides.length - 1;
+
+      slides.forEach(function (slide, index) {
+        slide.classList.toggle('is-active', index === sliderCurrent);
+      });
+
+      var caption = active ? active.getAttribute('data-caption') : '';
+      if (sliderCaption && caption) sliderCaption.textContent = caption;
+    }
+
+    // Selecting a photograph also walks the strip along, but only as far as
+    // the scroll range allows. The last photographs share the final position,
+    // so the highlight and caption keep moving across them.
+    function selectSlide(index) {
+      sliderCurrent = Math.max(0, Math.min(slides.length - 1, index));
+      paintSlider();
+
+      sliderAuto = true;
+      window.clearTimeout(sliderAutoTimer);
+      sliderAutoTimer = window.setTimeout(function () {
+        sliderAuto = false;
+      }, 700);
+
+      sliderTrack.scrollTo({
+        left: Math.min(slideOffset(sliderCurrent), maxScroll()),
+        behavior: 'smooth'
+      });
+    }
+
+    // A wheel, drag or scrollbar hands control back to the scroll position.
+    function releaseSlider() {
+      window.clearTimeout(sliderAutoTimer);
+      sliderAuto = false;
+    }
+
+    function syncSlider() {
+      sliderFrame = false;
+      if (sliderAuto) return;
+
+      var closest = 0;
+      var shortest = Infinity;
+
+      slides.forEach(function (slide, index) {
+        var distance = Math.abs(slideOffset(index) - sliderTrack.scrollLeft);
+        if (distance < shortest) {
+          shortest = distance;
+          closest = index;
+        }
+      });
+
+      if (closest === sliderCurrent) return;
+      sliderCurrent = closest;
+      paintSlider();
+    }
+
+    if (sliderTrack && slides.length) {
+      if (sliderTotal) sliderTotal.textContent = pad(slides.length);
+
+      if (sliderPrev) {
+        sliderPrev.addEventListener('click', function () {
+          selectSlide(sliderCurrent - 1);
+        });
+      }
+
+      if (sliderNext) {
+        sliderNext.addEventListener('click', function () {
+          selectSlide(sliderCurrent + 1);
+        });
+      }
+
+      // Arrow keys step one photograph at a time instead of the browser's
+      // default nudge, which the snap points would round back anyway.
+      sliderTrack.addEventListener('keydown', function (event) {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        releaseSlider();
+        selectSlide(sliderCurrent + (event.key === 'ArrowRight' ? 1 : -1));
+      });
+
+      sliderTrack.addEventListener('wheel', releaseSlider, { passive: true });
+      sliderTrack.addEventListener('pointerdown', releaseSlider, { passive: true });
+
+      sliderTrack.addEventListener(
+        'scroll',
+        function () {
+          if (sliderFrame) return;
+          sliderFrame = true;
+          window.requestAnimationFrame(syncSlider);
+        },
+        { passive: true }
+      );
+
+      window.addEventListener(
+        'resize',
+        function () {
+          selectSlide(sliderCurrent);
+        },
+        { passive: true }
+      );
+
+      paintSlider();
+    }
+  }
+
+  /* ---------------------------------------------------------------------- */
   /* Scrollspy: mark the section currently in view                          */
   /* ---------------------------------------------------------------------- */
   var navLinks = Array.prototype.slice.call(doc.querySelectorAll('.site-nav__list a[href^="#"]'));

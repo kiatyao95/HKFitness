@@ -3,7 +3,7 @@ HK FITNESS — asset pipeline.
 
 Builds every derivative image the site needs from the raw material in
 `My Picture/` and `HK_FITNESS_Signboard.pdf`: brand artwork, the coach
-portrait, client comparisons, the studio gallery and the social card.
+portrait, client comparisons, the studio carousel and the social card.
 
 Run from the project root:
     python tools/build-images.py
@@ -13,6 +13,7 @@ Requires: pillow, pymupdf
 
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 import pymupdf
@@ -178,39 +179,31 @@ def build_results() -> None:
 
 
 # --------------------------------------------------------------------------- #
-# Studio gallery
+# Studio carousel
 # --------------------------------------------------------------------------- #
 
-# Photograph, the box the frame is cut from (left, right, top in source
-# pixels), and the shape of the gallery slot it fills. Tiles are 5:4 and the
-# two wide slots are 2.57:1 — see `.gallery__item` in `assets/css/style.css`.
-STUDIO_CROPS = [
-    ("WhatsApp Image 2026-10-21 at 11.07.46 (1).jpeg", (30, 608, 560), (18, 7)),
-    ("WhatsApp Image 2026-10-21 at 11.07.42 (1).jpeg", (0, 608, 150), (5, 4)),
-    ("WhatsApp Image 2026-10-21 at 11.07.42.jpeg", (0, 608, 270), (5, 4)),
-    ("WhatsApp Image 2026-10-21 at 11.07.44.jpeg", (0, 608, 420), (5, 4)),
-    ("WhatsApp Image 2026-10-21 at 11.07.47.jpeg", (200, 608, 480), (5, 4)),
-    ("WhatsApp Image 2026-10-21 at 11.07.46.jpeg", (0, 608, 590), (18, 7)),
+# Shown whole in the carousel — no crop, no resample. The order matches the
+# slides in `index.html`.
+STUDIO_PHOTOS = [
+    "WhatsApp Image 2026-10-21 at 11.07.46 (1).jpeg",
+    "WhatsApp Image 2026-10-21 at 11.07.42 (1).jpeg",
+    "WhatsApp Image 2026-10-21 at 11.07.42.jpeg",
+    "WhatsApp Image 2026-10-21 at 11.07.44.jpeg",
+    "WhatsApp Image 2026-10-21 at 11.07.47.jpeg",
+    "WhatsApp Image 2026-10-21 at 11.07.46.jpeg",
 ]
 
 
 def build_studio() -> None:
     print("studio")
-    for index, (photo, (left, right, top), ratio) in enumerate(STUDIO_CROPS, start=1):
-        source = Image.open(RAW / "Gym Room" / photo).convert("RGB")
-
-        # The sources are portrait phone exports, so each slot keeps a
-        # horizontal band through the equipment rather than the whole frame.
-        width = right - left
-        height = round(width * ratio[1] / ratio[0])
-        top = max(0, min(top, source.height - height))
-        frame = source.crop((left, top, left + width, top + height))
-
-        # The band is upscaled once here and sharpened, rather than left for
-        # every browser to resample a 608px-wide original.
-        frame = frame.resize((frame.width * 2, frame.height * 2), Image.LANCZOS)
-        frame = frame.filter(ImageFilter.UnsharpMask(radius=1.1, percent=55, threshold=3))
-        save_jpeg(frame, f"studio/gym-{index:02d}.jpg", quality=80)
+    for index, photo in enumerate(STUDIO_PHOTOS, start=1):
+        relative = f"studio/gym-{index:02d}.jpg"
+        target = OUT / relative
+        # The carousel shows each frame whole, so the files are copied rather
+        # than cropped or resampled.
+        shutil.copyfile(RAW / "Gym Room" / photo, target)
+        width, height = Image.open(target).size
+        print(f"  {relative:<38} {width}x{height}  {target.stat().st_size // 1024} KB")
 
 
 # --------------------------------------------------------------------------- #

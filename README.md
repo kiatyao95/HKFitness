@@ -29,19 +29,18 @@ changing the crop; nothing in the HTML points at a hand-made logo file.
 
 ## Studio photographs
 
-`assets/img/studio/gym-01.jpg` … `gym-06.jpg` are cut from the room photos in `My Picture/Gym Room/`
-by `build_studio()` in `tools/build-images.py`. The gallery has two slot shapes, so every frame is
-cropped to match before `object-fit: cover` sees it: 5:4 for a regular tile, 2.57:1 for the two wide
-slots. The sources are portrait phone photos, so each one is reduced to a horizontal band through the
-equipment.
+`assets/img/studio/gym-01.jpg` … `gym-06.jpg` are copies of the room photos in `My Picture/Gym Room/`,
+made by `build_studio()` in `tools/build-images.py`. The carousel shows every frame whole: each slide
+is cut to the 608×1080 ratio of the source, so nothing is cropped, resampled or sharpened — a straight
+file copy keeps the originals intact.
 
-To swap a photo, drop it into `My Picture/Gym Room/`, edit its line in `STUDIO_CROPS` (the crop box is
-left, right, top in source pixels) and update the matching `<figure>` in the studio gallery — the
-alternate text has to describe what is actually in the frame. Then run `python tools/build-images.py`.
+To change a photo, replace the file in `My Picture/Gym Room/`, keep its entry in `STUDIO_PHOTOS`, and
+update the matching slide in `index.html` (order, alt text and caption). Then run
+`python tools/build-images.py`. The slide order in `STUDIO_PHOTOS` and the slides in the page must
+match, because the build names the output files `gym-01` … `gym-06`.
 
-The six figures fill the 6-column grid exactly: wide tile plus one tile on the first row, three tiles
-on the second, wide tile plus the visits note on the third. Keep that rhythm if you add or remove a
-photo, or the last row will leave a hole.
+If a replacement has a different aspect ratio, update `--slide-h` and `--slide-w` on `.studio-slider` in
+`assets/css/style.css` as well; the carousel sizes each slide from that height and ratio.
 
 ## Local preview
 
@@ -91,12 +90,12 @@ project subpath. Until then, indexing is driven by the sitemap link and search-e
 
 ## What is included
 
-- `index.html` — the whole page: hero, name story, training, method, studio gallery, results
+- `index.html` — the whole page: hero, name story, training, method, studio carousel, results
   comparison, coach, FAQ, contact.
 - `assets/css/style.css` — design tokens, layout, motion. Brand gold is `#f8c008`, sampled from the
   signboard artwork.
 - `assets/js/main.js` — header state, mobile menu, scroll reveals, before/after slider, result
-  switcher. Degrades gracefully: without JS the content is visible and the FAQ still opens.
+  switcher, studio carousel. Degrades gracefully: without JS the content is visible and the FAQ still opens.
 - `404.html`, `robots.txt`, `sitemap.xml`, `site.webmanifest`, icons.
 - `tools/build-images.py` — rebuilds every derivative image from the source material (`My Picture/`,
   `HK_FITNESS_Signboard.pdf`). Requires `pillow` and `pymupdf`; run `python tools/build-images.py`

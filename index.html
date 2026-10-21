@@ -467,30 +467,59 @@
         </p>
       </div>
 
-      <div class="gallery" data-gallery>
-        <figure class="gallery__item gallery__item--wide">
-          <img src="assets/img/studio/gym-01.jpg" alt="Benches, treadmills and a dumbbell rack along the mirror wall" width="1156" height="450" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery__item">
-          <img src="assets/img/studio/gym-02.jpg" alt="Dual cable station with a chin-up bar at HK Fitness" width="1216" height="972" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery__item">
-          <img src="assets/img/studio/gym-03.jpg" alt="The training floor: bench, treadmill and dumbbell rack" width="1216" height="972" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery__item">
-          <img src="assets/img/studio/gym-04.jpg" alt="45-degree leg press at HK Fitness" width="1216" height="972" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery__item">
-          <img src="assets/img/studio/gym-05.jpg" alt="Cable station and weight stack at HK Fitness" width="816" height="652" loading="lazy" decoding="async">
-        </figure>
-        <figure class="gallery__item gallery__item--wide">
-          <img src="assets/img/studio/gym-06.jpg" alt="Cardio by the window: spin bike, recumbent bike and treadmill" width="1216" height="472" loading="lazy" decoding="async">
-        </figure>
-        <div class="gallery__note">
-          <p class="mono">Studio visits</p>
-          <p>Come and try the equipment before you commit. Message me and we'll arrange a time.</p>
-          <a class="link-arrow" href="#contact">Arrange a visit</a>
+      <div class="studio-slider" data-slider>
+        <div class="studio-slider__bar">
+          <p class="studio-slider__count mono"><span data-slider-index>01</span> / <span data-slider-total>06</span></p>
+          <div class="studio-slider__buttons">
+            <button class="slider-btn" type="button" aria-label="Previous studio photograph" data-slider-prev>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="M15 4 7 12l8 8"/></svg>
+            </button>
+            <button class="slider-btn" type="button" aria-label="Next studio photograph" data-slider-next>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><path d="m9 4 8 8-8 8"/></svg>
+            </button>
+          </div>
         </div>
+
+        <ul class="studio-slider__track" data-slider-track tabindex="0" aria-label="Studio photographs">
+          <li class="studio-slide" data-slide data-caption="Mirror wall, benches and dumbbells">
+            <figure>
+              <img src="assets/img/studio/gym-01.jpg" alt="Benches, treadmills and a dumbbell rack along the mirror wall" width="608" height="1080" loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li class="studio-slide" data-slide data-caption="Dual cable station">
+            <figure>
+              <img src="assets/img/studio/gym-02.jpg" alt="Dual cable station with a chin-up bar at HK Fitness" width="608" height="1080" loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li class="studio-slide" data-slide data-caption="Training floor">
+            <figure>
+              <img src="assets/img/studio/gym-03.jpg" alt="The training floor: bench, treadmill and dumbbell rack" width="608" height="1080" loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li class="studio-slide" data-slide data-caption="45-degree leg press">
+            <figure>
+              <img src="assets/img/studio/gym-04.jpg" alt="45-degree leg press at HK Fitness" width="608" height="1080" loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li class="studio-slide" data-slide data-caption="Cable station and weight stack">
+            <figure>
+              <img src="assets/img/studio/gym-05.jpg" alt="Cable station and weight stack at HK Fitness" width="608" height="1080" loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li class="studio-slide" data-slide data-caption="Cardio row by the window">
+            <figure>
+              <img src="assets/img/studio/gym-06.jpg" alt="Cardio by the window: spin bike, recumbent bike and treadmill" width="608" height="1080" loading="lazy" decoding="async">
+            </figure>
+          </li>
+        </ul>
+
+        <p class="studio-slider__caption mono" data-slider-caption aria-live="polite" aria-atomic="true">Mirror wall, benches and dumbbells</p>
+      </div>
+
+      <div class="studio-visit" data-reveal>
+        <p class="mono">Studio visits</p>
+        <p>Come and try the equipment before you commit. Message me and we'll arrange a time.</p>
+        <a class="link-arrow" href="#contact">Arrange a visit</a>
       </div>
     </div>
   </section>
